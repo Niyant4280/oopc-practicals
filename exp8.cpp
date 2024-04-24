@@ -4,13 +4,17 @@
 using namespace std;
 class employee
 {
+private:
     static int cnt;
     static float average;
+
+private:
     int employee_id;
     string employee_name;
     string qualification;
     float experience;
     long int contact;
+
 protected:
     void getempdata()
     {
@@ -38,7 +42,7 @@ protected:
 
     void putempdata()
     {
-        //average -= experience;
+
         cout << "---------------------------------" << endl;
         cout.width(20);
         cout << left << "Employee Name "
@@ -54,17 +58,20 @@ protected:
              << ":" << contact << endl;
         cout << "---------------------------------" << endl;
     }
+
+protected:
     int searchemp(int eid)
     {
-        if(employee_id==eid)
+        if (employee_id == eid)
             return 1;
         else
             return 0;
     }
-    public:
+
+public:
     static void avgexp()
     {
-        cout<<"\nAverage Experience ="<<average/cnt;
+        cout << "\nAverage Experience =" << average / cnt;
     }
 };
 
@@ -74,6 +81,7 @@ class teaching : public employee
     string designation;
     string specialization;
     string pay_scale;
+
 public:
     void getempdata1()
     {
@@ -89,8 +97,6 @@ public:
         cout << "Enter Pay Scale : ";
         cin >> pay_scale;
         fflush(stdin);
-       // average += experience;
-
     }
     void putempdata1()
     {
@@ -106,22 +112,25 @@ public:
              << ":" << pay_scale << endl;
         cout << "---------------------------------" << endl;
     }
+
+public:
     int searchemp1(int eid)
     {
         return searchemp(eid);
     }
 };
-class non_teaching : public employee{
-    //static int count;
+class non_teaching : public employee
+{
+    static int count;
     int salary;
+
 public:
-     void getempdata1()
+    void getempdata1()
     {
         getempdata();
         cout << "Enter Salary :";
         cin >> salary;
         fflush(stdin);
-        //average += experience;
 
     }
 
@@ -133,31 +142,30 @@ public:
              << ":" << salary << endl;
         cout << "---------------------------------" << endl;
     }
-
 };
-int employee ::cnt = 0;
+int employee::cnt = 0;
 float employee::average = 0;
+int non_teaching::count = 0;
 int main()
 {
-  int n_teaching,n_non_teaching;
+    int n_teaching, n_non_teaching;
     cout << "Enter no of Teaching Employees : ";
     cin >> n_teaching;
-   // teaching :: count = n_teaching;
+
     teaching e[n_teaching];
     for (int i = 0; i < n_teaching; i++)
     {
         e[i].getempdata1();
-        //teaching :: count++;
+
     }
-    /*cout << "Enter no of Non Teaching Employees : ";
+    cout << "Enter no of Non Teaching Employees : ";
     cin >> n_non_teaching;
-    //non_teaching :: count = n_non_teaching;
+
     non_teaching n[n_non_teaching];
     for (int i = 0; i < n_non_teaching; i++)
     {
         n[i].getempdata1();
-
-    }*/
+    }
 
     int e_id;
 
@@ -168,34 +176,32 @@ int main()
         cout << "Enter an employee id: ";
         cin >> e_id;
         int i;
-        int flag=0;
+        int flag = 0;
         for (i = 0; i < n_teaching; i++)
         {
             int a = e[i].searchemp1(e_id);
-            if (a==1)
+            if (a == 1)
             {
                 e[i].putempdata1();
-                flag=1;
+                flag = 1;
                 break;
             }
-
-
         }
-        if(flag==0)
+        if (flag == 0)
         {
             for (i = 0; i < n_non_teaching; i++)
             {
-                int a = n[i].searchemp1(e_id);
-                if (a==1)
+                int a = e[i].searchemp1(e_id);
+                if (a == 1)
                 {
                     n[i].putempdata1();
-                    flag=1;
+                    flag = 1;
                     break;
                 }
             }
         }
 
-        if (flag==0)
+        if (flag == 0)
         {
 
             cout << "*" << endl;
@@ -208,7 +214,6 @@ int main()
         fflush(stdin);
     } while (choice == 'Y' || choice == 'y');
 
-   //cout << "average Experience = " << employee:: average / (float)employee::count;
-
+    n[0].avgexp();
     return 0;
 }
